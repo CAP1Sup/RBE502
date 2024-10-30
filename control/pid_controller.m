@@ -27,8 +27,8 @@ function [F, M, trpy, drpy] = pid_controller(qd, t, qn, params)
 
     % Coefficents for the moment PD controller
     % In form: [pRoll, dRoll; pPitch, dPitch; pYaw, dYaw]
-    rotP = 5;
-    rotD = 7.5;
+    rotP = 1;
+    rotD = 1.5;
     km = [rotP, rotD;
           rotP, rotD;
           1, 2];
@@ -47,15 +47,11 @@ function [F, M, trpy, drpy] = pid_controller(qd, t, qn, params)
     kzD = kz(2);
 
     % Position Controller
-    % Uses a hover controller to determine the desired angles and angular velocities
+    % Uses a 3D trajectory controller to determine the desired angles and angular velocities
     % Uses a PD controller to determine the moments
     % Determine if we need to update the attitude
     if (icnt == 5)
         icnt = 0;
-        % Zero the desired velocities and accelerations
-        % Hovering requires no movement or acceleration
-        qd{qn}.vel_des = [0; 0; 0];
-        qd{qn}.acc_des = [0; 0; 0];
 
         % Desired accelerations (general form)
         acc_des = qd{qn}.acc_des + kmD .* (qd{qn}.vel_des - qd{qn}.vel) + kmP .* (qd{qn}.pos_des - qd{qn}.pos);
