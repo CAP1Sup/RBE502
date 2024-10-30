@@ -65,6 +65,11 @@ function [F, M, trpy, drpy] = pid_controller(qd, t, qn, params)
         theta_des = 1 / params.grav * (acc_des(1) * cos(qd{qn}.yaw_des) + acc_des(2) * sin(qd{qn}.yaw_des));
         psi_des = qd{qn}.yaw_des;
 
+        % Bound the angles
+        max_angle = 80 * pi / 180;
+        phi_des = max(min(phi_des, max_angle), -max_angle);
+        theta_des = max(min(theta_des, max_angle), -max_angle);
+
         % Update the desired angles
         desired_angles = [phi_des; theta_des; psi_des];
     end
