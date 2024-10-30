@@ -58,7 +58,7 @@ set(gcf,'Renderer','OpenGL')
 %% *********************** INITIAL CONDITIONS ***********************
 fprintf('Setting initial conditions...\n')
 % Maximum time that the quadrotor is allowed to fly
-time_tol = 5;          % maximum simulation time
+time_tol = 20;          % maximum simulation time
 starttime = 0;          % start of simulation in seconds
 tstep     = 0.01;       % this determines the time step at which the solution is given
 cstep     = 0.05;       % image capture time interval
