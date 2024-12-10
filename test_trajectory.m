@@ -7,11 +7,14 @@ function [xtraj, ttraj, terminate_cond] = test_trajectory(start, stop, map, path
 % path  - n x 3 matrix path planned by your dijkstra algorithm
 % vis   - true for displaying visualization
 
-%Controller and trajectory generator handles
-controlhandle = @pid_controller;
+%trajhandle    = @jump;
+%trajhandle    = @circle;
+trajhandle    = @diamond;
 
-%trajhandle    = @trajectory_generator;
-trajhandle    = @jump;
+%Controller and trajectory generator handles
+%controlhandle = @pid_controller;
+%controlhandle = @(qd, t, qn, params)lqr_controller(qd, t, qn, params, trajhandle);
+controlhandle = @(qd, t, qn, params)mpc_controller(qd, t, qn, params, trajhandle);
 
 % Make cell
 if ~iscell(start), start = {start}; end
@@ -58,7 +61,7 @@ set(gcf,'Renderer','OpenGL')
 %% *********************** INITIAL CONDITIONS ***********************
 fprintf('Setting initial conditions...\n')
 % Maximum time that the quadrotor is allowed to fly
-time_tol = 20;          % maximum simulation time
+time_tol = 30;          % maximum simulation time
 starttime = 0;          % start of simulation in seconds
 tstep     = 0.01;       % this determines the time step at which the solution is given
 cstep     = 0.05;       % image capture time interval

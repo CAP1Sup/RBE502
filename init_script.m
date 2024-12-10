@@ -8,7 +8,5 @@
 disp('Generating Trajectory ...');
 %ttotal = 10;
 
-cor_constraint = true;
-
 path = {stop{1}};
 jump([],[],[],path);

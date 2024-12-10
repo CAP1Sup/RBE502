@@ -5,15 +5,32 @@ addpath(genpath('./'));
 
 %% Plan path
 disp('Planning ...');
+
+% Settings
 map_num = 0;
+trajectory = "jump";
+%trajectory = "circle";
+%trajectory = "diamond";
+
 map = load_map(['maps/map' num2str(map_num) '.txt'], 0.1, 1.0, 0.25);
 
 % Determine start and stop
 if map_num == 0
     %start = {[2.0 2.0 2.0]}; %map0
-    % Random start between -5 and 5 in X, Y, Z
-    start = {10 * (rand(1, 3) - 0.5)};
-    stop = {[0.0 0.0 0.0]};
+    if strcmp(trajectory, "jump")
+        % Random start between -5 and 5 in X, Y, Z
+        start = {10 * (rand(1, 3) - 0.5)};
+        stop = {[0.0 0.0 0.0]};
+    elseif strcmp(trajectory, "circle")
+        start = {[1.0 0.0 0.0]};
+        stop = {[1.0 0.0 0.5]};
+    elseif strcmp(trajectory, "diamond")
+        start = {[0.0 0.0 0.0]};
+        stop = {[1.0 0.0 0.0]};
+    else
+        error('Trajectory not recognized');
+    end
+
 elseif map_num == 1
     start = {[2.0 -2.0 1.0]}; %map1
     stop = {[8.0 18.0 2.5]};
@@ -28,6 +45,7 @@ else
 end
 
 nquad = length(start);
+path = {[0, 0, 0]};
 
 %% Additional init script
 init_script;
