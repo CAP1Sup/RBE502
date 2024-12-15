@@ -28,7 +28,7 @@ function [F, M, trpy, drpy] = pid_controller(qd, t, qn, params)
           posP, posD;
           100, 20];
 
-    % Coefficents for the attitude PD controller
+    % Coefficients for the attitude PD controller
     % In form: [pRoll, dRoll; pPitch, dPitch; pYaw, dYaw]
     attP = 3000;
     attD = attP / 10;
@@ -78,11 +78,11 @@ function [F, M, trpy, drpy] = pid_controller(qd, t, qn, params)
     % Assemble angular velocities into a useful form
     desired_angular_vels = [p_des; q_des; r_des];
 
-    % Attitute Control
+    % Attitude Control
     M = params.I * (kaP .* (desired_angles - qd{qn}.euler) + kaD .* (desired_angular_vels - qd{qn}.omega));
 
     % Thrust Control
-    % Vector compensationed for the angle of the quadrotor
+    % Vector compensation for the angle of the quadrotor
     F = params.mass * params.grav + params.mass * acc_des(3) * cos(phi) * cos(theta);
 
     % Output trpy and drpy as in hardware

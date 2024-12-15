@@ -8,8 +8,8 @@ disp('Planning ...');
 
 % Settings
 map_num = 0;
-trajectory = "jump";
-%trajectory = "circle";
+%trajectory = "jump";
+trajectory = "circle";
 %trajectory = "diamond";
 
 map = load_map(['maps/map' num2str(map_num) '.txt'], 0.1, 1.0, 0.25);
